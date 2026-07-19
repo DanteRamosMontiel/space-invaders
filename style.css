@@ -11,5 +11,16 @@
 ******************/
 
 canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.bgcanvas{
     background-color: #141414;
+    z-index: 1;
+}
+
+.playercanvas{
+    z-index: 2;
 }
