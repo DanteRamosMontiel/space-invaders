@@ -16,8 +16,8 @@ function Star() {
     this.x = Math.random() * background.width;
     this.y = Math.random() * background.height;
     this.color = colors[Math.floor(Math.random() * colors.length)];
-    this.radius = Math.random() * 2 + 0.5;
-    this.speed = Math.random() * 2 + 0.5;
+    this.radius = Math.random() * 2 + 0.2;
+    this.speed = this.radius;
 
     this.update = function () {
         this.y += this.speed;
@@ -25,7 +25,8 @@ function Star() {
         if (this.y > background.height + 10) {
             this.y = -10;
             this.x = Math.random() * background.width;
-            this.radius = Math.random() * 2 + 0.5;
+            this.radius = Math.random() * 2;
+            this.speed = this.radius;
         }
     };
 
@@ -43,7 +44,7 @@ export function initBackground() {
 
     stars.length = 0;
 
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 60; i++) {
         stars.push(new Star());
     }
 }
