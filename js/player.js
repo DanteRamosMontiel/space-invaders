@@ -1,13 +1,17 @@
+import * as shoot from "./shoot.js"
+
 const player = document.querySelector(".playercanvas");
-const ctx = player.getContext("2d");
+export const ctx = player.getContext("2d");
 
 // --- Movement --- //
 
 let velocity = 4;
 let spriteSize = 70;
 
-let posX = null;
-let posY = null;
+let moving = false;
+
+export let posX = null;
+export let posY = null;
 
 let right = false;
 let left = false;
@@ -23,7 +27,7 @@ const maxTiltStretch = 0.12;
 const tiltEase = 0.12;
 
 const sprite = new Image();
-sprite.src = "./assets/ships/player-ship-active.png"
+sprite.src = "./assets/ships/player-ship-active-1.png"
 
 
 export function initPlayer() {
@@ -42,8 +46,6 @@ export function initPlayer() {
 }
 
 export function drawPlayer(){
-    ctx.clearRect(0, 0, player.width, player.height);
-
     const centerX = posX + spriteSize / 2;
     const centerY = posY + spriteSize / 2;
 
@@ -100,28 +102,45 @@ window.addEventListener("resize", () => {
     if(posX + spriteSize > player.width){
         posX = player.width - spriteSize;
     }
+
+    if(posY + spriteSize > player.height){
+        posY = player.height - spriteSize;
+    }
 });
 
 document.addEventListener("keydown", (k) => {
     if(k.code === "KeyD" || k.code === "ArrowRight"){
         right = true;
+        moving = true;
     }else if(k.code === "KeyA" || k.code === "ArrowLeft"){
         left = true;
+        moving = true;
     }else if(k.code === "KeyW" || k.code === "ArrowUp"){
         up = true;
+        moving = true;
     }else if(k.code === "KeyS" || k.code === "ArrowDown"){
         down = true;
+        moving = true;
     }
 });
 
 document.addEventListener("keyup", (k) => {
     if(k.code === "KeyD" || k.code === "ArrowRight"){
         right = false;
+        moving = false;
     }else if(k.code === "KeyA" || k.code === "ArrowLeft"){
         left = false;
+        moving = false;
     }else if(k.code === "KeyW" || k.code === "ArrowUp"){
         up = false;
+        moving = false;
     }else if(k.code === "KeyS" || k.code === "ArrowDown"){
         down = false;
+        moving = false;
     }
+});
+
+// --- Shoots --- //
+document.addEventListener("mousedown", () => {
+   if (!moving) shoot.createShoot(posX, posY, ctx);
 });
