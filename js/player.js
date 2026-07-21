@@ -47,13 +47,13 @@ export function initPlayer() {
 
 export function drawPlayer(){
     const centerX = posX + spriteSize / 2;
-    const centerY = posY + spriteSize / 2;
+    const centerY = posY;
 
     ctx.save();
     ctx.translate(centerX, centerY);
     ctx.rotate(tiltAngle);
     ctx.scale(1 - tiltStretch, 1 + tiltStretch * 0.5);
-    ctx.drawImage(sprite, -spriteSize / 2, -spriteSize / 2, spriteSize, spriteSize);
+    ctx.drawImage(sprite, -spriteSize / 2, 0, spriteSize, spriteSize);
     ctx.restore();
 }
 
@@ -141,6 +141,13 @@ document.addEventListener("keyup", (k) => {
 });
 
 // --- Shoots --- //
+const shootCooldownMoving = 400; // cooldown ms's while moving
+const shootCooldownStill = 150;  // cooldown ms's while not moving
+let lastShot = 0;
+
 document.addEventListener("mousedown", () => {
-   if (!moving) shoot.createShoot(posX, posY, ctx);
+    const now = performance.now();
+    if (now - lastShot < (moving ? shootCooldownMoving : shootCooldownStill)) return;
+    lastShot = now;
+    shoot.createShoot(posX, posY, ctx);
 });

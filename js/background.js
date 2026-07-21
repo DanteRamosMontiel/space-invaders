@@ -2,11 +2,11 @@ const stars = [];
 
 const colors = [
     "#FFFFFF",
-    "#FFF8E7",
-    "#FFE066",
-    "#FFD1A3",
-    "#BFDFFF",
-    "#A8C8FF"
+    "#FFD23F",
+    "#FFA630",
+    "#FF6B6B",
+    "#FF4DA6",
+    "#FFF275"
 ];
 
 const background = document.querySelector(".bgcanvas");
@@ -16,7 +16,7 @@ function Star() {
     this.x = Math.random() * background.width;
     this.y = Math.random() * background.height;
     this.color = colors[Math.floor(Math.random() * colors.length)];
-    this.radius = Math.random() * 2 + 0.2;
+    this.radius = Math.random() * 1.7;
     this.speed = this.radius;
 
     this.update = function () {
@@ -31,10 +31,15 @@ function Star() {
     };
 
     this.draw = function () {
+        bgctx.save();
+        bgctx.globalAlpha = 0.4 + (this.radius / 2.2) * 0.6;
+        bgctx.shadowColor = this.color;
+        bgctx.shadowBlur = this.radius * 2;
         bgctx.beginPath();
         bgctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         bgctx.fillStyle = this.color;
         bgctx.fill();
+        bgctx.restore();
     };
 }
 

@@ -12,7 +12,7 @@ function Shot(x,y){
     this.velocity = 6;
 
     this.draw = function(){
-        ctx.drawImage(bullet, this.x, this.y, 3, 5);
+        ctx.drawImage(bullet, this.x, this.y, 5, 8);
     }
 
     this.update = function(){
