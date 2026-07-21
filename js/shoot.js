@@ -10,16 +10,16 @@ function Shot(x,y){
     this.color = "red";
     this.radius = 2;
     this.velocity = 6;
-
-    this.draw = function(){
-        ctx.drawImage(bullet, this.x, this.y, 5, 8);
-    }
-
-    this.update = function(){
-        this.draw();
-        this.y -= this.velocity;
-    }
 }
+
+Shot.prototype.draw = function(){
+    ctx.drawImage(bullet, this.x, this.y, 5, 8);
+};
+
+Shot.prototype.update = function(){
+    this.draw();
+    this.y -= this.velocity;
+};
 
 export function createShoot(playerX, playerY, context){
     ctx = context;
@@ -27,7 +27,11 @@ export function createShoot(playerX, playerY, context){
 }
 
 export function updateShoot(){
-    shots.forEach((s) => {
-        s.update();
-    });
+    //when bullets are no longer visible, they are deleted
+    for(let i = shots.length - 1; i >= 0; i--){
+        shots[i].update();
+        if(shots[i].y + 8 < 0){
+            shots.splice(i, 1);
+        }
+    }
 }
